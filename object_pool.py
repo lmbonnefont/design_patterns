@@ -1,9 +1,6 @@
 # Object pool design system
-class NoMoreCatException(Exception):
-    pass
+from exceptions import TooManyCatsAskedException, NoMoreCatException
 
-class TooManyCatsAskedException(Exception):
-    pass
 
 class CatPoolMeta(type):
     _instances = {}
@@ -51,7 +48,6 @@ class Cat:
 
 if __name__ == '__main__':
     # The client code.
-
     cp1 = CatPool(size=2)
     cp2 = CatPool(size=1)
 
