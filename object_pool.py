@@ -1,5 +1,10 @@
-# Object pool design system
+# Object pool design pattern
 from exceptions import TooManyCatsAskedException, NoMoreCatException
+
+
+class Cat:
+    def __init__(self, name: str):
+        self.name = name
 
 
 class CatPoolMeta(type):
@@ -39,15 +44,14 @@ class CatPool(metaclass=CatPoolMeta):
             raise ValueError("Cannot add anything else but cat")
 
 
-
-
-class Cat:
-    def __init__(self, name: str):
-        self.name = name
-
-
 if __name__ == '__main__':
-    # The client code.
+    # This design pattern is about limiting the creation of objects which are expensive to create (DB connexion for instance)
+    # We create a pool of instances which will be reused in the future. Each time we need an object we get it from the pool.
+    # When we do not need it anymore we release it
+    # It is commonly used with a singleton pattern to ensure the pool uniqueness
+    # The objects must be immutables so you don't get corrupted cats from the pool
+    # When a pool is empty, we can either raise an error to say there is no more cat or create new instances of cat and let the pool grow.
+
     cp1 = CatPool(size=2)
     cp2 = CatPool(size=1)
 
